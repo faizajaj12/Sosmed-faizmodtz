@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<title>FAIZMODTZ - Cyber Developer</title>
+<style>
+/* --- STYLE LOADING --- */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s;
+}
+
+.loading-text {
+    color: #0f0;
+    font-family: 'Courier New', monospace;
+    font-size: 1.5em;
+    margin-top: 20px;
+    text-shadow: 0 0 10px #0f0, 0 0 20px #0f0;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+/* --- STYLE UTAMA --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', monospace;
+}
+
+body {
+    background: #000500;
+    color: #fff;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* --- BACKGROUND EFEK KODING BERJALAN (MATRIX STYLE) --- */
+#matrix {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+}
+
+/* --- KANVAS BINTANG JATUH --- */
+#stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.container {
+    max-width: 400px;
+    margin: 30px auto;
+    padding: 25px;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 20px;
+    border: 1px solid #0f0;
+    box-shadow: 
+        0 0 30px #0f0, 
+        inset 0 0 30px rgba(0,255,0,0.2);
+    backdrop-filter: blur(5px);
+}
+
+/* --- LOGO BULAT SUPER GLOWING --- */
+.logo-container {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    border: 3px solid #0f0;
+    box-shadow: 
+        0 0 15px #0f0, 
+        0 0 30px #0f0, 
+        0 0 45px #0f0,
+        inset 0 0 25px #0f0;
+    overflow: hidden;
+    background: #111;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 15px #0f0, 0 0 30px #0f0, 0 0 45px #0f0, inset 0 0 25px #0f0; }
+    50% { box-shadow: 0 0 25px #0f0, 0 0 50px #0f0, 0 0 70px #0f0, inset 0 0 40px #0f0; }
+    100% { box-shadow: 0 0 15px #0f0, 0 0 30px #0f0, 0 0 45px #0f0, inset 0 0 25px #0f0; }
+}
+
+.logo-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* --- JUDUL YANG MENYALA --- */
+h1 {
+    font-size: 2.8em;
+    color: #0f0;
+    text-shadow: 
+        0 0 5px #0f0, 
+        0 0 10px #0f0, 
+        0 0 20px #0f0, 
+        0 0 30px #0f0,
+        0 0 40px #0f0;
+    margin-bottom: 10px;
+    letter-spacing: 3px;
+    animation: flicker 3s infinite alternate;
+}
+
+@keyframes flicker {
+    0%, 18%, 22%, 25%, 53%, 57%, 100% {
+        text-shadow: 
+        0 0 5px #0f0, 
+        0 0 10px #0f0, 
+        0 0 20px #0f0, 
+        0 0 30px #0f0,
+        0 0 40px #0f0;
+    }
+    20%, 24%, 55% {        
+        text-shadow: none;
+    }    
+}
+
+.subtitle {
+    color: #0f0;
+    font-size: 1.1em;
+    margin-bottom: 25px;
+    text-shadow: 0 0 10px #0f0;
+    opacity: 0.8;
+}
+
+/* --- JAM & TANGGAL BOX --- */
+.datetime-box {
+    background: rgba(0, 255, 0, 0.1);
+    border: 1px solid #0f0;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    color: #0f0;
+    font-weight: bold;
+    box-shadow: 0 0 20px rgba(0,255,0,0.4), inset 0 0 15px rgba(0,255,0,0.2);
+}
+
+/* --- TOMBOL LINK SUPER KEREN --- */
+.btn-link {
+    display: block;
+    width: 100%;
+    padding: 18px;
+    margin: 15px 0;
+    background: rgba(0,0,0,0.6);
+    border: 2px solid #0f0;
+    color: #0f0;
+    font-size: 1.15em;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 8px #0f0;
+    box-shadow: 
+        0 0 10px rgba(0,255,0,0.4),
+        inset 0 0 10px rgba(0,255,0,0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0,255,0,0.3), transparent);
+    transition: 0.5s;
+}
+
+.btn-link:hover::before {
+    left: 100%;
+}
+
+.btn-link:hover {
+    background: #0f0;
+    color: #000;
+    box-shadow: 
+        0 0 20px #0f0, 
+        0 0 40px #0f0, 
+        0 0 60px #0f0;
+    transform: translateY(-5px);
+    text-shadow: none;
+}
+
+.footer {
+    margin-top: 40px;
+    color: #0f0;
+    font-size: 0.9em;
+    text-shadow: 0 0 5px #0f0;
+    opacity: 0.6;
+}
+</style>
+</head>
+<body onload="startTime()">
+
+<!-- LAYAR LOADING -->
+<div id="loading-screen">
+    <div class="logo-container" style="width:100px; height:100px;">
+        <img src="https://cdn.phototourl.com/free/2026-05-03-cc6f2c2f-d080-4811-acd2-0df8533e5c4d.jpg" alt="Logo">
+    </div>
+    <div class="loading-text">SYSTEM BOOTING...</div>
+    <div class="loading-text" style="font-size:0.8em; margin-top:10px;">CONNECTING TO NETWORK...</div>
+</div>
+
+<!-- BACKGROUND EFEK MATRIX KODING -->
+<canvas id="matrix"></canvas>
+
+<!-- BACKGROUND EFEK BINTANG JATUH -->
+<canvas id="stars"></canvas>
+
+<div class="container">
+    <!-- LOGO -->
+    <div class="logo-container">
+        <img src="https://cdn.phototourl.com/free/2026-05-03-cc6f2c2f-d080-4811-acd2-0df8533e5c4d.jpg" alt="Faizmodtz Logo">
+    </div>
+
+    <!-- JUDUL -->
+    <h1>FAIZMODTZ</h1>
+    <p class="subtitle">⚡ CYBER DEVELOPER ⚡</p>
+
+    <!-- JAM & TANGGAL -->
+    <div class="datetime-box">
+        <div id="tanggal"></div>
+        <div id="jam"></div>
+    </div>
+
+    <!-- TOMBOL LINKS -->
+    <a href="https://whatsapp.com/channel/0029Vb7TgzcBA1ew49YXdT1K" class="btn-link" target="_blank">
+        📢 SALURAN WHATSAPP
+    </a>
+
+    <a href="https://faizmodtz-2.vercel.app/" class="btn-link" target="_blank">
+        🌐 WEBSITE CHIT / PANEL FF
+    </a>
+
+    <a href="https://tiktok.com/@faizmodtz" class="btn-link" target="_blank">
+        🎵 TIKTOK @faizmodtz
+    </a>
+
+    <a href="https://www.youtube.com/@FIZX_Official" class="btn-link" target="_blank">
+        💠 YOUTUBE FIZX Official
+    </a>
+
+    <!-- TOMBOL WHATSAPP ADMIN BARU -->
+    <a href="https://wa.me/6283172916537" class="btn-link" target="_blank">
+        📞 WHATSAPP ADMIN 1
+    </a>
+
+    <a href="https://wa.me/6287896761663" class="btn-link" target="_blank">
+        📞 WHATSAPP ADMIN 2
+    </a>
+
+    <div class="footer">
+        // ACCESS GRANTED BY FAIZMODTZ //
+    </div>
+</div>
+
+<script>
+// --- SCRIPT LOADING 3 DETIK ---
+window.onload = function() {
+    setTimeout(function() {
+        document.getElementById('loading-screen').style.opacity = '0';
+        setTimeout(function() {
+            document.getElementById('loading-screen').style.display = 'none';
+        }, 500);
+    }, 3000);
+
+    startMatrix(); // Jalanin efek matrix
+    createStars(); // Jalanin efek bintang
+    startTime();   // Jalanin jam
+}
+
+// --- SCRIPT BACKGROUND MATRIX HACKER ASLI! ---
+function startMatrix() {
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()_+-=[]{}|;:,.<>?";
+    const fontSize = 12;
+    const columns = canvas.width / fontSize;
+    const drops = [];
+
+    for (let x = 0; x < columns; x++) {
+        drops[x] = 1;
+    }
+
+    function draw() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "#0f0";
+        ctx.font = fontSize + "px monospace";
+        ctx.shadowBlur = 5;
+        ctx.shadowColor = "#0f0";
+
+        for (let i = 0; i < drops.length; i++) {
+            const text = letters.charAt(Math.floor(Math.random() * letters.length));
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                drops[i] = 0;
+            }
+
+            drops[i]++;
+        }
+    }
+
+    setInterval(draw, 35);
+}
+
+// --- SCRIPT EFEK BINTANG JATUH ---
+function createStars() {
+    const canvas = document.getElementById('stars');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let stars = [];
+    for(let i = 0; i < 100; i++) {
+        stars.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            r: Math.random() * 1.5,
+            speed: Math.random() * 2 + 1
+        });
+    }
+
+    function drawStars() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "rgba(0, 255, 0, 0.8)";
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = "#0f0";
+        
+        for(let i = 0; i < stars.length; i++) {
+            let s = stars[i];
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        
+        moveStars();
+    }
+
+    function moveStars() {
+        for(let i = 0; i < stars.length; i++) {
+            let s = stars[i];
+            s.y += s.speed;
+            if(s.y > canvas.height) {
+                s.y = -5;
+                s.x = Math.random() * canvas.width;
+            }
+        }
+    }
+
+    setInterval(drawStars, 30);
+}
+
+// --- SCRIPT JAM & TANGGAL ---
+function startTime() {
+    const today = new Date();
+    const h = today.getHours();
+    const m = today.getMinutes();
+    const s = today.getSeconds();
+    
+    const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+    const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+    
+    const dayName = days[today.getDay()];
+    const date = today.getDate();
+    const monthName = months[today.getMonth()];
+    const year = today.getFullYear();
+
+    document.getElementById('tanggal').innerHTML = `${dayName}, ${date} ${monthName} ${year}`;
+    document.getElementById('jam').innerHTML = `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+    
+    setTimeout(startTime, 1000);
+}
+</script>
+
+</body>
+</html>
